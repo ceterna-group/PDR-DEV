@@ -1,5 +1,5 @@
 public without sharing class BookingHandler {
-    
+     
   public static void checkHotLeads(List<Holiday_Booking__c> bookings) {
     // get odi id
     String ODI = [SELECT Id FROM User WHERE Name = 'ODI' LIMIT 1].Id;

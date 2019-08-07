@@ -12,7 +12,9 @@ public class LeadHandler {
   * @Date: 22/07/2019      
   * @Description: sets the Park_IDs__c field based on the park names given in the 
   * 	Park_Codes__c multiselect picklist. Called in both beforeInsert and beforeUpdate
-  * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description] 
+  * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
+  *               7.08.2019 - B0119 - Ronan Williams - update to ensure the correct Id field (Park_ID__c) is retrieved from
+  *               parks and allocated to lead records
   ***********************************************************************************************/  
   public static void setParkIds(List<Lead> leads) {
     // get all the park names from the leads
@@ -35,7 +37,6 @@ public class LeadHandler {
     // map park name to id
     Map<String, String> parkNameToId = new Map<String, String>();
     for (Integer p = 0; p < parks.size(); p++) {
-//      parkNameToId.put(parks[p].Name, parks[p].Id);
       parkNameToId.put(parks[p].Name, String.valueOf(parks[p].Park_ID__c));
     }
     // set comma id list

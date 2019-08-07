@@ -47,6 +47,7 @@ public with sharing class LeadTriggerHandler extends TriggerHandler {
   public override void beforeUpdate() {
     // set field based on multiselect picklist
     LeadHandler.setPark(Trigger.new);
+
     // set Park_IDs__c field
     LeadHandler.setParkIds(Trigger.new);
   }
