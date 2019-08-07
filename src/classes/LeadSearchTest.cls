@@ -1,3 +1,9 @@
+/**********************************************************************************************
+ * @Author: Ceterna
+ * @Date:
+ * @Description: Test class for LeadSearch
+ * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
+ ***********************************************************************************************/
 @isTest
 public class LeadSearchTest {
     
@@ -10,7 +16,7 @@ public class LeadSearchTest {
     newLead.Email = 'test@test.com';
     newLead.Company = 'Test';
     insert newLead;
-    Map<String, Object> results = LeadSearch.runFullSearch(null, null, null, null);
+    Map<String, Object> results = LeadSearch.runFullSearch(null, null, null, null, null, null);
     List<Object> leads = (List<Object>) results.get('leads');
   }
     

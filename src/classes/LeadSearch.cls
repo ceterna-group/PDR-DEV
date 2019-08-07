@@ -1,7 +1,22 @@
+/**********************************************************************************************
+ * @Author: Ceterna
+ * @Date:
+ * @Description: Class for LEadSearch component
+ * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
+ ***********************************************************************************************/
 public without sharing class LeadSearch {
     
+  /**********************************************************************************************
+ * @Author: Ceterna
+ * @Date:
+ * @Description: Runs a search using the gigven parameters as query criteria (AND)
+ * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
+ *  			 07/08/2019 - E0061/B0063 - Ell - Changed so we can search on phone/mobile, and so we use the Postcode_No_Spaces field
+ ***********************************************************************************************/
   @AuraEnabled
-  public static Map<String, Object> runFullSearch(String firstName, String lastName, String email, String postcode) {
+  public static Map<String, Object> runFullSearch(String firstName, String lastName, String email, String postcode, String phone, String mobilePhone) {
+    // remove spaces from postcode
+    if (postcode != null) postcode = postcode.replaceAll(' ', '');
     RecordType holidayMakerRT = new RecordType();
     if (!Test.isRunningTest()) {
       holidayMakerRT = [SELECT Id FROM RecordType WHERE sObjectType = 'Lead' AND DeveloperName = 'Holiday_Maker' LIMIT 1];
@@ -10,18 +25,18 @@ public without sharing class LeadSearch {
     }
     // get holiday makers
     List<Lead> holidayMakers = new List<Lead>();
-    String holidayQuery = 'SELECT Id, FirstName, LastName, Email, PostalCode FROM Lead WHERE RecordTypeId = \'' + holidayMakerRT.Id + '\' ';
-    holidayQuery = addQuery('Lead', holidayQuery, firstName, lastName, email, postcode);
+    String holidayQuery = 'SELECT Id, FirstName, LastName, Email, Postcode_No_Spaces__c, Phone, MobilePhone FROM Lead WHERE RecordTypeId = \'' + holidayMakerRT.Id + '\' ';
+    holidayQuery = addQuery('Lead', holidayQuery, firstName, lastName, email, postcode, phone, mobilePhone);
     holidayMakers = Database.query(holidayQuery);
     // get leads
     List<Lead> leads = new List<Lead>();
-    String leadQuery = 'SELECT Id, FirstName, LastName, Email, PostalCode FROM Lead WHERE RecordTypeId != \'' + holidayMakerRT.Id + '\' ';
-    leadQuery = addQuery('Lead', leadQuery, firstName, lastName, email, postcode);
+    String leadQuery = 'SELECT Id, FirstName, LastName, Email, Postcode_No_Spaces__c, Phone, MobilePhone FROM Lead WHERE RecordTypeId != \'' + holidayMakerRT.Id + '\' ';
+    leadQuery = addQuery('Lead', leadQuery, firstName, lastName, email, postcode, phone, mobilePhone);
     leads = Database.query(leadQuery);
     // get contacts
     List<Contact> contacts = new List<Contact>();
-    String contactQuery = 'SELECT Id, FirstName, LastName, Email, MailingPostalCode FROM Contact WHERE Id != null ';
-    contactQuery = addQuery('Contact', contactQuery, firstName, lastName, email, postcode);
+    String contactQuery = 'SELECT Id, FirstName, LastName, Email, Postcode_No_Spaces__c, Phone, MobilePhone FROM Contact WHERE Id != null ';
+    contactQuery = addQuery('Contact', contactQuery, firstName, lastName, email, postcode, phone, mobilePhone);
     contacts = Database.query(contactQuery);
     Map<String, Object> results = new Map<String, Object>();
     results.put('holiday_makers', holidayMakers);
@@ -61,12 +76,14 @@ public without sharing class LeadSearch {
     }
   }
     
-  private static String addQuery(String obj, String query, String firstName, String lastName, String email, String postcode) {
-    String post = obj == 'Contact' ? 'MailingPostalCode' : 'PostalCode';
+  private static String addQuery(String obj, String query, String firstName, String lastName, String email, String postcode, String phone, String mobilePhone) {
     if (firstName != '' && firstName != null) query += ' AND FirstName LIKE \'%' + firstName + '%\'';
     if (lastName != '' && lastName != null) query += ' AND LastName LIKE \'%' + LastName + '%\'';
     if (email != '' && email != null) query += ' AND Email LIKE \'%' + email + '%\'';
-    if (postcode != '' && postcode != null) query += ' AND ' + post + ' LIKE \'%' + postcode + '%\'';
+    if (postcode != '' && postcode != null) query += ' AND Postcode_No_Spaces__c LIKE \'%' + postcode + '%\'';
+    if (postcode != '' && postcode != null) query += ' AND Postcode_No_Spaces__c LIKE \'%' + postcode.replaceAll(' ', '') + '%\'';
+    if (phone != '' && phone != null) query += ' AND Phone LIKE \'%' + phone + '%\'';
+    if (mobilePhone != '' && mobilePhone != null) query += ' AND MobilePhone LIKE \'%' + mobilePhone + '%\'';
     return query;
   }
     

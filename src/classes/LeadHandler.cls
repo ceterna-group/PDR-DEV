@@ -28,14 +28,15 @@ public class LeadHandler {
     }
     // get park ids
     List<Park__c> parks = [
-      SELECT Id, Name
+      SELECT Id, Park_ID__c, Name
       FROM Park__c
       WHERE Name IN :parkNames
     ];
     // map park name to id
     Map<String, String> parkNameToId = new Map<String, String>();
     for (Integer p = 0; p < parks.size(); p++) {
-      parkNameToId.put(parks[p].Name, parks[p].Id);
+//      parkNameToId.put(parks[p].Name, parks[p].Id);
+      parkNameToId.put(parks[p].Name, String.valueOf(parks[p].Park_ID__c));
     }
     // set comma id list
     for (Integer l = 0; l < leads.size(); l++) {

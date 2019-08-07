@@ -7,7 +7,9 @@
       firstName: $C.get('v.firstName'),
       lastName: $C.get('v.lastName'),
       email: $C.get('v.email'),
-      postcode: $C.get('v.postcode')
+      postcode: $C.get('v.postcode'),
+      phone: $C.get('v.phone'),
+      mobilePhone: $C.get('v.mobile')
     }
     console.log(params);
     action.setParams(params);
