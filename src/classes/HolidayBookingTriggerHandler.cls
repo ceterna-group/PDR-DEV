@@ -14,7 +14,7 @@ public with sharing class HolidayBookingTriggerHandler {
     * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
     *				07/08/2019 -
     ***********************************************************************************************/
-    public static void beforeInsert (List<Holiday_Booking__c> newLeads) {
+    public static void beforeInsert(List<Holiday_Booking__c> newLeads) {
 
     }
 
@@ -25,9 +25,8 @@ public with sharing class HolidayBookingTriggerHandler {
     * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
     *				07/08/2019 -
     ***********************************************************************************************/
-    public static void afterInsert (Map<Id,Holiday_Booking__c> newRecordMap, Map<Id, Holiday_Booking__c> oldRecordMap) {
-        setLeadAndCampaign(newRecordMap, oldRecordMap);
-
+    public static void afterInsert(Map<Id, Holiday_Booking__c> newRecordMap) {
+        setLeadAndCampaign(newRecordMap, new Map<Id, Holiday_Booking__c>());
     }
 
 
@@ -38,7 +37,7 @@ public with sharing class HolidayBookingTriggerHandler {
     * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
     *				07/08/2019 -
     ***********************************************************************************************/
-    public static void beforeUpdate (Map<Id,Holiday_Booking__c> oldLeadMap, Map<Id,Holiday_Booking__c> newLeadMap) {
+    public static void beforeUpdate(Map<Id, Holiday_Booking__c> oldLeadMap, Map<Id, Holiday_Booking__c> newLeadMap) {
 
     }
 
@@ -50,9 +49,8 @@ public with sharing class HolidayBookingTriggerHandler {
     * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
     *				07/08/2019 -
     ***********************************************************************************************/
-    public static void afterUpdate (Map<Id,Holiday_Booking__c> oldRecordMap, Map<Id,Holiday_Booking__c> newRecordMap) {
+    public static void afterUpdate(Map<Id, Holiday_Booking__c> newRecordMap, Map<Id, Holiday_Booking__c> oldRecordMap) {
         setLeadAndCampaign(newRecordMap, oldRecordMap);
-
     }
 
     /**********************************************************************************************
@@ -66,19 +64,27 @@ public with sharing class HolidayBookingTriggerHandler {
 
         Id LeadTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Holiday Maker').getRecordTypeId();
         Id CampaignTypeId = Schema.SObjectType.Campaign.getRecordTypeInfosByName().get('Hot Holiday Campaign').getRecordTypeId();
-
         Map<String, String> leadParkMap = new Map<String, String>();
-        Set<Id> leadIds = new Set<Id>();
+        Set<Id> campaignLeadIdsToRemove = new Set<Id>();
 
         //filter out records that have a lookup relationship to a lead, have a rating of 1 - hot and a lookup to a park
-        for(Holiday_Booking__c booking : newRecordMap.values()){
-            if (booking.Park__c != null && booking.Lead__c != null && booking.Hot_Hols_Campaign__c == 1 ) {
-                leadParkMap.put(booking.Lead__c, booking.Park__c);
-                leadIds.add(booking.Lead__c);
+        for (Holiday_Booking__c booking : newRecordMap.values()) {
+            if (booking.Park__c != null && booking.Lead__c != null) {
+                if (!oldRecordMap.containsKey(booking.Id)) {
+                    if (booking.Hot_Hols_Campaign__c == 1) {
+                        leadParkMap.put(booking.Lead__c, booking.Park__c);
+                    }
+                } else {
+                    if (booking.Hot_Hols_Campaign__c == 1 && oldRecordMap.get(booking.Id).Hot_Hols_Campaign__c == 0) {
+                        leadParkMap.put(booking.Lead__c, booking.Park__c);
+                    } else if (booking.Hot_Hols_Campaign__c == 0 && oldRecordMap.get(booking.Id).Hot_Hols_Campaign__c == 1) {
+                        campaignLeadIdsToRemove.add(booking.Lead__c);
+                    }
+                }
             }
         }
 
-        List<CampaignMember> campaignMembers    = new List<CampaignMember>();
+        List<CampaignMember> newCampaignMembers    = new List<CampaignMember>();
         List<Lead> leadsToReassign              = new List<Lead>();
         Map<String, Campaign> parkToCampaignMap = new Map<String, Campaign>();
 
@@ -88,7 +94,7 @@ public with sharing class HolidayBookingTriggerHandler {
 
         List<Lead> leadsInTrigger = [SELECT Id, OwnerId,
                                     (SELECT Id FROM CampaignMembers)
-                                    FROM Lead WHERE Id IN :leadIds AND RecordType = :LeadTypeId];
+                                    FROM Lead WHERE Id IN :leadParkMap.keySet() AND RecordTypeId = :LeadTypeId];
 
         //iterate over the values of the holiday booking map
         for(Lead lead : leadsInTrigger){
@@ -98,7 +104,7 @@ public with sharing class HolidayBookingTriggerHandler {
                 String parkId            = leadParkMap.get(lead.Id);
                 newMember.CampaignId     = parkToCampaignMap.get(parkId).Id;
 
-                campaignMembers.add(newMember);
+                newCampaignMembers.add(newMember);
 
                 if (lead.OwnerId != parkToCampaignMap.get(parkId).Park__r.Sales_Manager__c) {
                     lead.OwnerId = parkToCampaignMap.get(parkId).Park__r.Sales_Manager__c;
@@ -108,8 +114,13 @@ public with sharing class HolidayBookingTriggerHandler {
             }
         }
 
-        insert campaignMembers;
+        insert newCampaignMembers;
         update leadsToReassign;
 
+        List<CampaignMember> campaignMembersToRemove = [SELECT Id FROM CampaignMember
+                                                        WHERE Campaign.RecordTypeId = :CampaignTypeId
+                                                        AND LeadId IN :campaignLeadIdsToRemove];
+
+        delete campaignMembersToRemove;
     }
 }

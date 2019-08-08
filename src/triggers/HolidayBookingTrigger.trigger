@@ -28,7 +28,7 @@ trigger HolidayBookingTrigger on Holiday_Booking__c (
             HolidayBookingTriggerHandler.afterInsert(Trigger.newMap);
         }
         if (Trigger.isUpdate) {
-            HolidayBookingTriggerHandler.afterUpdate(Trigger.oldMap, Trigger.newMap);
+            HolidayBookingTriggerHandler.afterUpdate(Trigger.newMap, Trigger.oldMap);
         }
     }
 }

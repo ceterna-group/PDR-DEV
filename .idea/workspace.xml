@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ce6cf22-e27d-4f22-bb78-62464ab86261" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/classes/HolidayBookingTriggerTest.cls" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PDR - Dev1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PDR - Dev1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/HolidayBookingTriggerHandler.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/HolidayBookingTriggerHandler.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/triggers/HolidayBookingTrigger.trigger" beforeDir="false" afterPath="$PROJECT_DIR$/src/triggers/HolidayBookingTrigger.trigger" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,9 +53,11 @@
                   <option name="buildSuccessDatesBySourceRootRelativePath">
                     <map>
                       <entry key="APEXCLASS:BOOKINGHANDLER" value="1565194145478" />
-                      <entry key="APEXCLASS:HOLIDAYBOOKINGTRIGGERHANDLER" value="1565255663756" />
+                      <entry key="APEXCLASS:HOLIDAYBOOKINGTRIGGERHANDLER" value="1565263759000" />
+                      <entry key="APEXCLASS:HOLIDAYBOOKINGTRIGGERTESET" value="1565262964000" />
+                      <entry key="APEXCLASS:HOLIDAYBOOKINGTRIGGERTEST" value="1565265393674" />
                       <entry key="APEXTRIGGER:BOOKINGTRIGGER" value="1565195279262" />
-                      <entry key="APEXTRIGGER:HOLIDAYBOOKINGTRIGGER" value="1565197083253" />
+                      <entry key="APEXTRIGGER:HOLIDAYBOOKINGTRIGGER" value="1565262460000" />
                     </map>
                   </option>
                   <option name="lastBuildScope" value="CONTEXT" />
@@ -8928,6 +8930,90 @@
       </list>
     </option>
   </component>
+  <component name="RunManager" selected="Apex Unit Tests.HolidayBookingTriggerTest.sample">
+    <configuration name="HolidayBookingTriggerTest" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <option name="allTests" value="false" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="apexLogLevel" value="DEBUG" />
+      <option name="calloutsLogLevel" value="INFO" />
+      <option name="connectionName" value="PDR - Dev1" />
+      <option name="connectionType" value="MDAPI" />
+      <option name="contextConfiguration" value="true" />
+      <option name="databaseLogLevel" value="INFO" />
+      <option name="logLevelsInitialized" value="false" />
+      <option name="moduleToTestClassNames">
+        <map>
+          <entry key="PDR - Dev1">
+            <value>
+              <set>
+                <option value="HolidayBookingTriggerTest" />
+              </set>
+            </value>
+          </entry>
+        </map>
+      </option>
+      <option name="nbaLogLevel" value="INFO" />
+      <option name="profilingLogLevel" value="INFO" />
+      <option name="systemLogLevel" value="DEBUG" />
+      <option name="testClassToTestMethodNames">
+        <map />
+      </option>
+      <option name="testSuiteName" />
+      <option name="validationLogLevel" value="INFO" />
+      <option name="visualforceLogLevel" value="INFO" />
+      <option name="waveLogLevel" value="INFO" />
+      <option name="workflowLogLevel" value="INFO" />
+      <method v="2" />
+    </configuration>
+    <configuration name="HolidayBookingTriggerTest.sample" type="com.illuminatedcloud.intellij" factoryName="Apex Unit Tests" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
+      <option name="allTests" value="false" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="apexLogLevel" value="DEBUG" />
+      <option name="calloutsLogLevel" value="INFO" />
+      <option name="connectionName" value="PDR - Dev1" />
+      <option name="connectionType" value="MDAPI" />
+      <option name="contextConfiguration" value="true" />
+      <option name="databaseLogLevel" value="INFO" />
+      <option name="logLevelsInitialized" value="false" />
+      <option name="moduleToTestClassNames">
+        <map>
+          <entry key="PDR - Dev1">
+            <value>
+              <set>
+                <option value="HolidayBookingTriggerTest" />
+              </set>
+            </value>
+          </entry>
+        </map>
+      </option>
+      <option name="nbaLogLevel" value="INFO" />
+      <option name="profilingLogLevel" value="INFO" />
+      <option name="systemLogLevel" value="DEBUG" />
+      <option name="testClassToTestMethodNames">
+        <map>
+          <entry key="HolidayBookingTriggerTest">
+            <value>
+              <set>
+                <option value="sample" />
+              </set>
+            </value>
+          </entry>
+        </map>
+      </option>
+      <option name="testSuiteName" />
+      <option name="validationLogLevel" value="INFO" />
+      <option name="visualforceLogLevel" value="INFO" />
+      <option name="waveLogLevel" value="INFO" />
+      <option name="workflowLogLevel" value="INFO" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Apex Unit Tests.HolidayBookingTriggerTest.sample" />
+        <item itemvalue="Apex Unit Tests.HolidayBookingTriggerTest" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration>$USER_HOME$/.subversion</configuration>
   </component>
@@ -8953,5 +9039,8 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PDR___Dev1$HolidayBookingTriggerTest_sample.null" NAME="PDR - Dev1 Coverage Results" MODIFIED="1565265400176" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="Apex" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="true" PROJECT_NAME="PDR - Dev1" CONNECTION_NAME="PDR - Dev1" CONNECTION_TYPE="MDAPI" />
   </component>
 </project>
