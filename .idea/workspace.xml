@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6ce6cf22-e27d-4f22-bb78-62464ab86261" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/BookingHandler.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/BookingHandler.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/HolidayBookingTriggerHandler.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/HolidayBookingTriggerHandler.cls" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/triggers/BookingTrigger.trigger" beforeDir="false" afterPath="$PROJECT_DIR$/src/triggers/BookingTrigger.trigger" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/triggers/HolidayBookingTrigger.trigger" beforeDir="false" afterPath="$PROJECT_DIR$/src/triggers/HolidayBookingTrigger.trigger" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,9 +52,10 @@
                 <ConnectionWorkspaceSettings>
                   <option name="buildSuccessDatesBySourceRootRelativePath">
                     <map>
-                      <entry key="APEXCLASS:BOOKINGHANDLER" value="1565189753812" />
-                      <entry key="APEXCLASS:HOLIDAYBOOKINGTRIGGERHANDLER" value="1565187909087" />
-                      <entry key="APEXTRIGGER:HOLIDAYBOOKINGTRIGGER" value="1565175034000" />
+                      <entry key="APEXCLASS:BOOKINGHANDLER" value="1565194145478" />
+                      <entry key="APEXCLASS:HOLIDAYBOOKINGTRIGGERHANDLER" value="1565197089514" />
+                      <entry key="APEXTRIGGER:BOOKINGTRIGGER" value="1565195279262" />
+                      <entry key="APEXTRIGGER:HOLIDAYBOOKINGTRIGGER" value="1565197083253" />
                     </map>
                   </option>
                   <option name="lastBuildScope" value="CONTEXT" />

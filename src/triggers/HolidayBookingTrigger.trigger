@@ -15,14 +15,14 @@ trigger HolidayBookingTrigger on Holiday_Booking__c (
         after delete,
         after undelete) {
 
-    if (Trigger.isBefore) {
-        if (Trigger.isInsert) {
-            HolidayBookingTriggerHandler.beforeInsert(Trigger.new);
-        }
-        if (Trigger.isUpdate) {
-            HolidayBookingTriggerHandler.beforeUpdate(Trigger.oldMap, Trigger.newMap);
-        }
-    }
+//    if (Trigger.isBefore) {
+//        if (Trigger.isInsert) {
+//            HolidayBookingTriggerHandler.beforeInsert(Trigger.new);
+//        }
+//        if (Trigger.isUpdate) {
+//            HolidayBookingTriggerHandler.beforeUpdate(Trigger.oldMap, Trigger.newMap);
+//        }
+//    }
     if (Trigger.isAfter) {
         if (Trigger.isInsert) {
             HolidayBookingTriggerHandler.afterInsert(Trigger.newMap);
