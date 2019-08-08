@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="IlluminatedCloud (PDR - Dev1/PDR - Dev1)" project-jdk-type="IlluminatedCloud">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

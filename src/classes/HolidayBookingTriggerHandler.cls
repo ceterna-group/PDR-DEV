@@ -25,8 +25,8 @@ public with sharing class HolidayBookingTriggerHandler {
     * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
     *				07/08/2019 -
     ***********************************************************************************************/
-    public static void afterInsert (Map<Id,Holiday_Booking__c> newRecordMap) {
-        setLeadAndCampaign(newRecordMap);
+    public static void afterInsert (Map<Id,Holiday_Booking__c> newRecordMap, Map<Id, Holiday_Booking__c> oldRecordMap) {
+        setLeadAndCampaign(newRecordMap, oldRecordMap);
 
     }
 
@@ -51,25 +51,27 @@ public with sharing class HolidayBookingTriggerHandler {
     *				07/08/2019 -
     ***********************************************************************************************/
     public static void afterUpdate (Map<Id,Holiday_Booking__c> oldRecordMap, Map<Id,Holiday_Booking__c> newRecordMap) {
-
-        setLeadAndCampaign(newRecordMap);
+        setLeadAndCampaign(newRecordMap, oldRecordMap);
 
     }
 
     /**********************************************************************************************
-    * @Author: Ceternax
+    * @Author: Ceterna
     * @Date:
     * @Description: Method to update lead owner to Sales Manager of Park and adding the lead to the campaign
     * @Revision(s): [Date] - [Change Reference] - [Changed By] - [Description]
     *				07/08/2019 -
     ***********************************************************************************************/
-    public static void setLeadAndCampaign(Map<Id, Holiday_Booking__c> recordMap) {
+    public static void setLeadAndCampaign(Map<Id, Holiday_Booking__c> newRecordMap, Map<Id, Holiday_Booking__c> oldRecordMap) {
+
+        Id LeadTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Holiday Maker').getRecordTypeId();
+        Id CampaignTypeId = Schema.SObjectType.Campaign.getRecordTypeInfosByName().get('Hot Holiday Campaign').getRecordTypeId();
 
         Map<String, String> leadParkMap = new Map<String, String>();
         Set<Id> leadIds = new Set<Id>();
 
         //filter out records that have a lookup relationship to a lead, have a rating of 1 - hot and a lookup to a park
-        for(Holiday_Booking__c booking : recordMap.values()){
+        for(Holiday_Booking__c booking : newRecordMap.values()){
             if (booking.Park__c != null && booking.Lead__c != null && booking.Hot_Hols_Campaign__c == 1 ) {
                 leadParkMap.put(booking.Lead__c, booking.Park__c);
                 leadIds.add(booking.Lead__c);
@@ -86,7 +88,7 @@ public with sharing class HolidayBookingTriggerHandler {
 
         List<Lead> leadsInTrigger = [SELECT Id, OwnerId,
                                     (SELECT Id FROM CampaignMembers)
-                                    FROM Lead WHERE Id IN :leadIds];
+                                    FROM Lead WHERE Id IN :leadIds AND RecordType = :LeadTypeId];
 
         //iterate over the values of the holiday booking map
         for(Lead lead : leadsInTrigger){

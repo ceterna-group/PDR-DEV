@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ce6cf22-e27d-4f22-bb78-62464ab86261" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PDR - Dev1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/PDR - Dev1.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/HolidayBookingTriggerHandler.cls" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/HolidayBookingTriggerHandler.cls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/triggers/BookingTrigger.trigger" beforeDir="false" afterPath="$PROJECT_DIR$/src/triggers/BookingTrigger.trigger" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/triggers/HolidayBookingTrigger.trigger" beforeDir="false" afterPath="$PROJECT_DIR$/src/triggers/HolidayBookingTrigger.trigger" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,7 +42,7 @@
         <option name="anonymousApexSettings">
           <AnonymousApexSettings>
             <option name="apexLogLevel" value="FINEST" />
-            <option name="documentText" value="insert new Holiday_Booking__c(&#10;        Lead__c = [SELECT Id FROM Lead LIMIT 1].Id,&#10;        Hot_Hols_Campaign__c = 0, &#10;        Park__c = [SELECT Id FROM Park__c LIMIT 1].Id&#10;);" />
+            <option name="documentText" value="Id LeadTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByName().get('Holiday Maker').getRecordTypeId();&#10;&#10;Id CampaignTypeId = Schema.SObjectType.Campaign.getRecordTypeInfosByName().get('Hot Holiday Campaign').getRecordTypeId();" />
           </AnonymousApexSettings>
         </option>
         <option name="connectionWorkspaceSettings">
@@ -53,7 +53,7 @@
                   <option name="buildSuccessDatesBySourceRootRelativePath">
                     <map>
                       <entry key="APEXCLASS:BOOKINGHANDLER" value="1565194145478" />
-                      <entry key="APEXCLASS:HOLIDAYBOOKINGTRIGGERHANDLER" value="1565197089514" />
+                      <entry key="APEXCLASS:HOLIDAYBOOKINGTRIGGERHANDLER" value="1565255663756" />
                       <entry key="APEXTRIGGER:BOOKINGTRIGGER" value="1565195279262" />
                       <entry key="APEXTRIGGER:HOLIDAYBOOKINGTRIGGER" value="1565197083253" />
                     </map>
@@ -8911,9 +8911,10 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
