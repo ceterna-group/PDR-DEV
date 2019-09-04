@@ -4,10 +4,10 @@
     <option name="connections">
       <list>
         <IlluminatedCloudConnection>
-          <option name="connectionName" value="PDR - Dev1" />
+          <option name="connectionName" value="Parkdean Dev1 Ronan" />
           <option name="connectionType" value="MDAPI" />
           <option name="defaultModuleName" value="PDR - Dev1" />
-          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/PDR___Dev1/OfflineSymbolTable.zip" />
+          <option name="offlineSymbolTablePath" value="$PROJECT_DIR$/IlluminatedCloud/Parkdean_Dev1_Ronan/OfflineSymbolTable.zip" />
         </IlluminatedCloudConnection>
       </list>
     </option>

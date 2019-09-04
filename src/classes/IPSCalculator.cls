@@ -3,21 +3,60 @@ public class IPSCalculator {
   @AuraEnabled
   public static List<Price_Rule__c> getRules(String quoteId) {
     List<Price_Rule__c> rules = new List<Price_Rule__c>();
-    String parkId = getParkId(quoteId);
-    Set<String> grades = new Set<String>();
-    List<Line_Item__c> products = getProducts(quoteId);
-    for (Integer i = 0; i < products.size(); i++) {
-      String grade = products[i].Stock_Grade_New__c;
-      if (grade != null) grades.add(grade);
-    }
-    rules = [
+
+    if (Label.Current_IPS_Year != null && Label.Current_IPS_Year.length() == 4 && Label.Current_IPS_Year.isNumeric()) {
+
+      Integer year = Integer.valueOf(Label.Current_IPS_Year);
+
+      String parkId = getParkId(quoteId);
+      Set<String> grades = new Set<String>();
+      List<Line_Item__c> products = getProducts(quoteId);
+      for (Integer i = 0; i < products.size(); i++) {
+        String grade = products[i].Stock_Grade_New__c;
+        if (grade != null) grades.add(grade);
+      }
+/*    rules = [
       SELECT Week_Start__c, Week_Price__c, Weekend_Price__c,
         Stock_Grade_New__c, Park__c, Peak_season__c, Peak_summer__c, Do_not_Allow__c
       FROM Price_Rule__c
       WHERE Park__c = :parkId
       AND Stock_Grade_New__c IN :grades
-    ];
-    return rules;
+    ];*/
+      List<Price_Rule__c> prList = [
+              SELECT Week_Start__c,
+                      Week_Price__c,
+                      Weekend_Price__c,
+                      Stock_Grade_New__c,
+                      Park__c,
+                      Peak_season__c,
+                      Peak_summer__c,
+                      Do_not_Allow__c
+              FROM Price_Rule__c
+              WHERE Park__c = :parkId
+              AND CALENDAR_YEAR(Week_Start__c) = : year
+              AND Stock_Grade_New__c IN :grades ];
+
+      Date latestDate = System.today();
+
+      for (Price_Rule__c pr : prList) {
+        if (pr.Week_Start__c >= System.today()) {
+          rules.add(pr);
+        }
+        if (pr.Week_start__c > latestDate) {
+          latestDate = pr.Week_Start__c;
+        }
+      }
+      if (latestDate.addYears(-1) < system.today()) {
+        for (Price_Rule__c pr : prList) {
+          if (pr.Week_Start__c >= latestDate.addYears(-1)
+                  && pr.Week_Start__c < System.today()
+                  ) {
+            rules.add(pr);
+          }
+        }
+      }
+    }
+      return rules;
   }
     
   @AuraEnabled
