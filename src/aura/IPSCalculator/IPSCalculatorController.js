@@ -10,7 +10,8 @@
           rules = rules.sort(function(a, b) {
             return new Date(a.Week_Start__c) - new Date(b.Week_Start__c);
           });
-          console.log('RULES:', rules);
+          console.log('RULES:');
+          console.log(rules);
           $H.runAction($C, 'c.getFeatures', params, function(features) {
             $H.runAction($C, 'c.getProducts', params, function(products) {
               if (products.length == 0) return alert('None of your products are available for IPS.');
@@ -95,7 +96,7 @@
     var items = [];
     var days = [];
     $C.get('v.products').forEach(function(a, i) {
-      if (a.Not_available_for_IPS__c == false) {
+      if (a.Not_available_for_IPS__c === false) {
       var item = {
         Quote__c: $C.get('v.quoteId'),
         Product__c: a.Product__c,
@@ -105,15 +106,26 @@
         Opportunity__c: null
       };
       $C.get('v.dates').forEach(function(b) {
+
+        console.log('in forEach date has property');
+        console.log(b.date);
+
+        var recordDate = new Date(b.date);
+        recordDate.setHours(recordDate.getHours() + 3);
+
+        var month = (b.date.getMonth() + 1) < 10 ? '0' + (b.date.getMonth() + 1) : (b.date.getMonth() + 1);
+        var day = b.date.getDate() < 10 ? '0' + b.date.getDate() : b.date.getDate();
+
+
         days.push({
-          Date__c: b.date.toISOString().split('T')[0],
+          Date__c : b.date.getFullYear() + '-' + month + '-' + day ,
           Value__c: b.pricing[i].Price__c,
           Selected__c: b.selected,
           Available__c: b.available,
           Match__c: b.match,
           Product__c: a.Product__c,
-          Peak_season__c: b.pricing[i].Peak__c == 'SEASON',
-          Peak_summer__c: b.pricing[i].Peak__c == 'SUMMER'          
+          Peak_season__c: b.pricing[i].Peak__c === 'SEASON',
+          Peak_summer__c: b.pricing[i].Peak__c === 'SUMMER'
         });
       });
       items.push(item);
@@ -121,7 +133,7 @@
       }
     });
     var products = $C.get('v.products').filter(function(a) {
-      return a.Not_available_for_IPS__c == false;
+      return a.Not_available_for_IPS__c === false;
     });
     console.log(days);
     console.log(JSON.stringify(products));
